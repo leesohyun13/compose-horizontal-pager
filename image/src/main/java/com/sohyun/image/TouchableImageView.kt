@@ -54,8 +54,8 @@ fun TouchableImageView(
             }
             .pointerInput(Unit) {
                 detectTransformCustomGestures(
-                    onGesture = { _, pan, zoom, _, timeMills ->
-                        val canConsume = state.canConsume(pan, zoom)
+                    onGesture = { _, pan, zoom, _, size, timeMills ->
+                        val canConsume = state.canConsume(pan, zoom, size)
                         if (canConsume) {
                             scope.launch {
                                 state.changeGesture(zoom, pan, timeMills)

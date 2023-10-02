@@ -93,7 +93,6 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
             _scale.value == maxScale -> {
                 _offsetX.snapTo(0f)
                 _offsetY.snapTo(0f)
-
                 _scale.animateTo(minScale)
             }
         }
@@ -107,16 +106,18 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
     // if do zoom or scroll, consume gesture. else not consume.
     // for example, when image is inside horizontal pager, we have to divide what we consume.
     // if not, cannot scroll to next page on horizontal pager.
-    fun canConsume(pan: Offset, zoom: Float) : Boolean {
-        Log.d(TAG, "canConsume()")
+    fun canConsume(pan: Offset, zoom: Float, fingerSize: Int) : Boolean {
+        Log.d(TAG, "canConsume() $pan, $zoom, $fingerSize")
         return shouldConsumeEvent ?: run {
             var consume = true
-            if (zoom == minScale) {
-                if (scale == minScale) {
+            if (zoom == 1f) {
+                // if fingerSize == 2, maybe user do zoom. so when user use a only one touch point, not consume gesture.
+                if (scale == 1f && fingerSize == 1) {
                     consume = false
                 } else {
                     val ratio = (abs(pan.x) / abs(pan.y))
-                    if (ratio > 3) {   // Horizontal drag // TODO 왜 horizontal만 체크하는거지?
+                    Log.d(TAG, "canConsume(): ratio $ratio")
+                    if (ratio > 3) {   // Horizontal drag
                         if ((pan.x < 0) && (_offsetX.value == _offsetX.lowerBound)) {
                             // Drag R to L when right edge of the content is shown.
                             consume = false
@@ -145,6 +146,7 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
 
     suspend fun changeGesture(zoom: Float, pan: Offset, timeMillis: Long) = coroutineScope {
         Log.d(TAG, "changeGesture() $zoom, (${pan.x},${pan.y})")
+        // if change zoom, only change scale value.
         _scale.snapTo(_scale.value * zoom)
 
         val boundX = java.lang.Float.max(
@@ -152,9 +154,6 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
             0f
         ) / 2f
         _offsetX.updateBounds(-boundX, boundX)
-        launch {
-            _offsetX.snapTo(_offsetX.value + pan.x)
-        }
 
         val boundY = java.lang.Float.max(
             (realImageSize.height * _scale.value - layoutSize.height),
@@ -162,11 +161,16 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
         ) / 2f
         _offsetY.updateBounds(-boundY, boundY)
 
-        launch {
-            _offsetY.snapTo(_offsetY.value + pan.y)
+        // when change zoom, not change offset.
+        if (zoom == 1f || _scale.value == 1f) {
+            launch {
+                _offsetX.snapTo(_offsetX.value + pan.x)
+            }
+            launch {
+                _offsetY.snapTo(_offsetY.value + pan.y)
+            }
+            velocityTracker.addPosition(timeMillis, position = pan)
         }
-
-        velocityTracker.addPosition(timeMillis, position = pan)
 
         if (zoom != 1f) {
             shouldFling = false
@@ -186,11 +190,5 @@ class TouchableState(private val minScale: Float = 1f, private val maxScale: Flo
         }
 
         shouldFling = true
-
-        if (_scale.value < 1f) {
-            launch {
-                _scale.animateTo(1f)
-            }
-        }
     }
 }

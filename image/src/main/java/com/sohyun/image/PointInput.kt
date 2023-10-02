@@ -15,9 +15,12 @@ import androidx.compose.ui.util.fastForEach
 import kotlin.math.PI
 import kotlin.math.abs
 
+/**
+ * custom gesture pointer input scope
+ * */
 suspend fun PointerInputScope.detectTransformCustomGestures(
     panZoomLock: Boolean = false,
-    onGesture: (centroid: Offset, pan: Offset, zoom: Float, rotation: Float, timeMillis: Long) -> Boolean,
+    onGesture: (centroid: Offset, pan: Offset, zoom: Float, rotation: Float, fingerSize: Int, timeMillis: Long) -> Boolean,
     onGestureStart: () -> Unit = {},
     onGestureEnd: () -> Unit = {},
 ) {
@@ -65,7 +68,7 @@ suspend fun PointerInputScope.detectTransformCustomGestures(
                         zoomChange != 1f ||
                         panChange != Offset.Zero
                     ) {
-                        val isConsumed = onGesture(centroid, panChange, zoomChange, effectiveRotation, event.changes[0].uptimeMillis)
+                        val isConsumed = onGesture(centroid, panChange, zoomChange, effectiveRotation, event.changes.size, event.changes[0].uptimeMillis)
 
                         if (isConsumed) {
                             event.changes.fastForEach {
