@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sohyun.horizontal_pager"
+    namespace = "com.sohyun.image"
     compileSdk = 34
 
     defaultConfig {
@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":image"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -51,4 +50,13 @@ dependencies {
 
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
+
+    implementation(libs.coil.compose)
+    implementation(libs.ui.util)
+
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
 }

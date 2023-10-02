@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PointerInputSample"
 include(":app")
-include(":horizontal-pager")
+include(":image")
