@@ -3,7 +3,6 @@ This is a sample project that shows zoom and scroll custom image on Compose. And
 
 
 # Description
------------------
 
 ## TouchableImageView
 
@@ -30,7 +29,9 @@ it control scale and offset value on view.
 |onEndGesture()|detect point after touch up. it contains animation. so it make more natural gesture. |
 |reset()|reset scale, zoom value. |
 |canConsume()|This method detect whether it can consume. if it not use this functino, it consume all gesture especially when image is on pager. image has `pointerInput()` that consume all gesture. |
-|zoomIn()|when user tap double times, it do automatically zoom. 1f -> 2f -> 3f. |
+|zoomIn()|when user tap double times, it do automatically zoom. 1f -> 2f -> 3f. | 
+
+
 
 
 |State|Description|
@@ -40,15 +41,16 @@ it control scale and offset value on view.
 |scale|image scale value. it is between minScale and maxScale. |
 |offsetX|image offset X. we set how much we move to. if it out of boundary, it go back to max X position using animation. |
 |offsetY|image offset Y. |
+</br></br>
 
-
---------------
 
 ## Sample Video
 
 ### Single image version
+[![Single image sample viedo](sample/single_image_thumbnail.png)](sample/single_image_sample.mp4)
 
 
 ### Horizontal pager version
+[![sample viedo](sample/horizontal_pager_thumbnail.png)](sample/horizontal_pager_sample.mp4)
 
 
