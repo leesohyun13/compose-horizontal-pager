@@ -2,6 +2,8 @@
 This is a sample project that shows zoom and scroll custom image on Compose. And it can controll if it comsume gesture when it is on horizontal pager. 
 
 
+# Description
+-----------------
 
 ## TouchableImageView
 
@@ -16,6 +18,7 @@ This is a sample project that shows zoom and scroll custom image on Compose. And
 |isVisible|visible value. if it visible, reset state value. |
 
 
+----------------
 
 ## TouchableState
 it control scale and offset value on view. 
@@ -37,4 +40,15 @@ it control scale and offset value on view.
 |scale|image scale value. it is between minScale and maxScale. |
 |offsetX|image offset X. we set how much we move to. if it out of boundary, it go back to max X position using animation. |
 |offsetY|image offset Y. |
+
+
+--------------
+
+## Sample Video
+
+### Single image version
+
+
+### Horizontal pager version
+
 
