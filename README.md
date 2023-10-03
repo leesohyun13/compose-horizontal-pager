@@ -1,4 +1,5 @@
 # Touchable image 
+
 This is a sample project that shows zoom and scroll custom image on Compose. And it can controll if it comsume gesture when it is on horizontal pager. 
 
 
@@ -20,7 +21,7 @@ This is a sample project that shows zoom and scroll custom image on Compose. And
 ----------------
 
 ## TouchableState
-it control scale and offset value on view. 
+It control scale and offset value on view. 
 
 |Fuction|Description|
 |------|---|
@@ -46,11 +47,7 @@ it control scale and offset value on view.
 
 ## Sample Video
 
-### Single image version
-[![Single image sample viedo](sample/single_image_thumbnail.png)](sample/single_image_sample.mp4)
+![sample-app](https://github.com/leesohyun13/compose-touchable-image/tree/main/sample/single_image_sample.gif)
 
-
-### Horizontal pager version
-[![sample viedo](sample/horizontal_pager_thumbnail.png)](sample/horizontal_pager_sample.mp4)
 
 
